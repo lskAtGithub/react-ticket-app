@@ -1,4 +1,4 @@
-interface IRequestOptions extends RequestInit {}
+import { IRequestOptions } from '../../../types/Request'
 
 export function request<T>(url: string, options?: IRequestOptions): Promise<T> {
   let packOptions: IRequestOptions = options || {}
