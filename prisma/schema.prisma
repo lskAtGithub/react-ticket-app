@@ -11,6 +11,31 @@ datasource db {
 }
 
 model User {
+  id     Int     @id @default(autoincrement())
+  userId String  @unique
+  topic  Topic[]
+}
+
+model Topic {
+  id      Int      @id @default(autoincrement())
+  userId  String
+  user    User     @relation(fields: [userId], references: [userId])
+  avatar  String
+  content String
+  images  Images[]
+  options Option[]
+}
+
+model Images {
+  id      Int   @id @default(autoincrement())
+  topicId Int
+  topic   Topic @relation(fields: [topicId], references: [id])
+}
+
+model Option {
   id     Int    @id @default(autoincrement())
-  userId String @unique
+  topcId Int
+  topic  Topic  @relation(fields: [topcId], references: [id])
+  key    String
+  value  Int
 }
