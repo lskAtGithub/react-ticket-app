@@ -1,23 +1,19 @@
 import { PrismaClient } from '@prisma/client'
-import { NextRequest, NextResponse } from 'next/server'
+import { resError, resSuccess } from '@/app/utils/requestResponse'
 
-interface UserRequest {
-  userId: string
-}
+import type { NextRequest } from 'next/server'
+import type { UserRequest } from '../../../../types/ApiRequest'
+
+
 
 const prisma = new PrismaClient()
 
 export async function POST(params: NextRequest) {
   try {
     const { userId } = (await params.json()) as UserRequest
-
     if (!userId) {
-      return NextResponse.json({
-        message: 'Bad Request',
-        status: '400',
-      })
+      return resError({})
     }
-
     let user = await prisma.user.findUnique({
       where: {
         userId: userId,
@@ -30,15 +26,12 @@ export async function POST(params: NextRequest) {
         },
       })
     }
-
-    return NextResponse.json({
-      user,
-    })
+    return resSuccess({ data: user })
   } catch (error) {
-    return NextResponse.json({
+    return resError({
       message: 'Internal error',
       status: '500',
-      error,
+      data: error,
     })
   }
 }
