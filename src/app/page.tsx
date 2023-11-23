@@ -14,14 +14,7 @@ export default function Home() {
       </header>
       <div className='flex items-center justify-center m-4'>
         <main className='flex flex-col items-center justify-center w-full border-x-2 sm:w-full md:w-9/12 lg:w-6/12'>
-          {[{}, {}, {}].map(() => (
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugit,
-              harum. Sunt aspernatur alias eum necessitatibus libero magnam
-              eveniet a, deserunt placeat, quibusdam ut aut in repudiandae minus
-              iure repellat officiis?
-            </p>
-          ))}
+
         </main>
       </div>
     </div>
