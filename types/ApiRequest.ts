@@ -8,6 +8,6 @@ export interface TopicRequest {
   userId: string
   avatar: string
   content: string
-  images: any[]
+  images: string[]
   options: string[]
 }

@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  importMapsFromDatabaseSchema = true
 }
 
 datasource db {
@@ -22,14 +23,8 @@ model Topic {
   user    User     @relation(fields: [userId], references: [userId])
   avatar  String
   content String
-  images  Images[]
+  images  Json @map("images")
   options Option[]
-}
-
-model Images {
-  id      Int   @id @default(autoincrement())
-  topicId Int
-  topic   Topic @relation(fields: [topicId], references: [id])
 }
 
 model Option {
