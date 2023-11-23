@@ -5,11 +5,12 @@ interface UserRequest {
   userId: string
 }
 
-const prisma = new PrismaClient
+const prisma = new PrismaClient()
 
 export async function POST(params: NextRequest) {
   try {
     const { userId } = (await params.json()) as UserRequest
+
     if (!userId) {
       return NextResponse.json({
         message: 'Bad Request',
@@ -17,31 +18,27 @@ export async function POST(params: NextRequest) {
       })
     }
 
-    const user = await prisma.user.findUnique({
+    let user = await prisma.user.findUnique({
       where: {
-        userId: userId
-      }
+        userId: userId,
+      },
     })
-
-    if(!user) {
-      await prisma.user.create({
+    if (!user) {
+      user = await prisma.user.create({
         data: {
-          userId: userId
-        }
+          userId: userId,
+        },
       })
     }
 
-
-
     return NextResponse.json({
-      status: '200',
       user,
     })
   } catch (error) {
-    console.error('🚀 ~ file: route.ts:12 ~ POST ~ error:', error)
     return NextResponse.json({
       message: 'Internal error',
       status: '500',
+      error,
     })
   }
 }

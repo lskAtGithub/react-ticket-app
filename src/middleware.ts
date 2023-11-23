@@ -1,13 +1,21 @@
 import { authMiddleware, redirectToSignIn } from '@clerk/nextjs'
+import { request } from './app/utils/request'
 
 export default authMiddleware({
   async afterAuth(auth, req, evt) {
-    if(!auth.userId && !auth.isPublicRoute) {
+    if (!auth.userId && !auth.isPublicRoute) {
       return redirectToSignIn({ returnBackUrl: req.url })
     }
 
-    console.log("🚀 ~ file: middleware.ts:10 ~ afterAuth ~ auth.userId:", auth.userId)
-  }
+    request('/user', {
+      method: 'POST',
+      body: JSON.stringify({
+        userId: auth.userId,
+      }),
+    }).then(res=>{
+      console.log(res)
+    })
+  },
 })
 
 export const config = {
