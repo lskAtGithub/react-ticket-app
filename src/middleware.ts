@@ -12,8 +12,6 @@ export default authMiddleware({
       body: JSON.stringify({
         userId: auth.userId,
       }),
-    }).then(res=>{
-      console.log(res)
     })
   },
 })
