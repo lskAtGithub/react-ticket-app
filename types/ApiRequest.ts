@@ -5,6 +5,7 @@ export interface UserRequest {
 }
 
 export interface TopicRequest {
+  id: number
   userId: string
   avatar: string
   content: string
