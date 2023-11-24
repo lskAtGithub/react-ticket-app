@@ -94,7 +94,7 @@ function PublishButton() {
         {images.map((item, index) => {
           return (
             <div
-              className='flex justify-between items-center pl-4 pr-4'
+              className='flex justify-between items-center px-4'
               key={index}>
               <span className='overflow-ellipsis overflow-hidden whitespace-nowrap'>
                 {item}
