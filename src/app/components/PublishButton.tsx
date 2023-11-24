@@ -12,10 +12,12 @@ import {
   Spacer,
   Input,
   Chip,
+  Listbox,
+  ListboxItem,
 } from '@nextui-org/react'
-import { FileUp, Send } from 'lucide-react'
+import { FileUp, Send, X } from 'lucide-react'
 import { CldUploadButton } from 'next-cloudinary'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { request } from '@/app/utils/request'
 
 import type { CldUploadWidgetResults } from 'next-cloudinary'
@@ -29,6 +31,9 @@ function PublishButton() {
   const [images, setImages] = useState<string[]>([])
   const { userId } = useAuth()
   const avatar = useUser().user?.imageUrl
+  useEffect(() => {
+    console.log(images)
+  }, [images])
 
   const onSubmit = (onClose: Function) => {
     request('/topic', {
@@ -41,7 +46,6 @@ function PublishButton() {
         options,
       }),
     }).then((res) => {
-      console.log(res)
       onClose()
       onReset()
     })
@@ -67,9 +71,10 @@ function PublishButton() {
 
   function Upload() {
     const onUploadSuccess = (result: CldUploadWidgetResults) => {
-      if (result.event === 'success' && result.info) {
-        setImages([...images, (result.info as any).secure_url as string])
-      }
+      setImages((prevImages) => [
+        ...prevImages,
+        (result.info as any).secure_url,
+      ])
     }
 
     return (
@@ -84,11 +89,22 @@ function PublishButton() {
             </div>
           </button>
         </CldUploadButton>
-        <div className=''>
-          {images.map((item) => {
-            return <img src={item} key={item} alt='' />
-          })}
-        </div>
+
+        {images.map((item, index) => {
+          return (
+            <div
+              className='flex justify-between items-center pl-4 pr-4'
+              key={index}>
+              <span className='overflow-ellipsis overflow-hidden whitespace-nowrap'>
+                {item}
+              </span>
+              <X
+                className='flex-shrink-0 ml-2 rounded-full cursor-pointer hover:text-red-400 hover:bg-gray-300'
+                size={16}
+              />
+            </div>
+          )
+        })}
       </>
     )
   }
