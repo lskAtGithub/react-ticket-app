@@ -20,6 +20,14 @@ export async function GET() {
 }
 
 export async function POST(param: NextRequest) {
+  const paramCheck = (data: TopicRequest)=> {
+    if(!data.content) {
+      return resError({ data: null, status: '400', message: 'content is required' })
+    }
+    if(!data.options) {
+      return resError({ data: null, status: '400', message: 'options is required' })
+    }
+  }
   try {
     const data = (await param.json()) as TopicRequest
     const topic = await prisma.topic.create({
@@ -28,6 +36,7 @@ export async function POST(param: NextRequest) {
         avatar: data.avatar,
         content: data.content,
         images: data.images as any,
+        createTime: new Date().toLocaleString(),
         options: {
           create: data.options.map((item) => ({
             key: item,
