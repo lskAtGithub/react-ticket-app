@@ -1,12 +1,17 @@
-import { IRequestOptions } from '../../../types/Request'
+import { IRequestOptions, ICommonResult } from '../../../types/Request'
 
-export function request<T>(url: string, options?: IRequestOptions): Promise<T> {
+export function request(
+  url: string,
+  options?: IRequestOptions
+): Promise<ICommonResult> {
   let packOptions: IRequestOptions = options || {}
-  if(!packOptions.headers) {
+  if (!packOptions.headers) {
     packOptions.headers = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     }
   }
-  
-  return fetch(process.env.API_URL + url, packOptions).then((res) => res.json()) as Promise<T>
+
+  return fetch(process.env.API_URL + url, packOptions).then((res) =>
+    res.json()
+  ) as Promise<ICommonResult>
 }
