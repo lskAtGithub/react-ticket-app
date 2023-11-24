@@ -17,7 +17,7 @@ import {
 } from '@nextui-org/react'
 import { FileUp, Send, X } from 'lucide-react'
 import { CldUploadButton } from 'next-cloudinary'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { request } from '@/app/utils/request'
 
 import type { CldUploadWidgetResults } from 'next-cloudinary'
@@ -31,9 +31,6 @@ function PublishButton() {
   const [images, setImages] = useState<string[]>([])
   const { userId } = useAuth()
   const avatar = useUser().user?.imageUrl
-  useEffect(() => {
-    console.log(images)
-  }, [images])
 
   const onSubmit = (onClose: Function) => {
     request('/topic', {
@@ -77,6 +74,10 @@ function PublishButton() {
       ])
     }
 
+    const onRemoveImage = (item: string) => {
+      setImages((prevImages) => prevImages.filter((i) => i !== item))
+    }
+
     return (
       <>
         <CldUploadButton
@@ -101,6 +102,7 @@ function PublishButton() {
               <X
                 className='flex-shrink-0 ml-2 rounded-full cursor-pointer hover:text-red-400 hover:bg-gray-300'
                 size={16}
+                onClick={() => onRemoveImage(item)}
               />
             </div>
           )
