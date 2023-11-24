@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider                     = "prisma-client-js"
   importMapsFromDatabaseSchema = true
 }
 
@@ -18,13 +18,14 @@ model User {
 }
 
 model Topic {
-  id      Int      @id @default(autoincrement())
-  userId  String
-  user    User     @relation(fields: [userId], references: [userId])
-  avatar  String
-  content String
-  images  Json @map("images")
-  options Option[]
+  id         Int      @id @default(autoincrement())
+  userId     String
+  user       User     @relation(fields: [userId], references: [userId])
+  avatar     String
+  content    String
+  images     Json     @map("images")
+  options    Option[]
+  createTime String
 }
 
 model Option {
