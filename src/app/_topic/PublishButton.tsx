@@ -23,7 +23,13 @@ import { request } from '@/app/utils/request'
 import type { CldUploadWidgetResults } from 'next-cloudinary'
 import { useAuth, useUser } from '@clerk/nextjs'
 
-function PublishButton() {
+interface PublishButtonProps {
+  setIsRefresh: Function
+}
+
+
+function PublishButton(props: PublishButtonProps) {
+  const { setIsRefresh } = props
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const [content, setContent] = useState('')
   const [options, setOptions] = useState<string[]>([])
@@ -45,6 +51,7 @@ function PublishButton() {
     }).then((res) => {
       onClose()
       onReset()
+      setIsRefresh(new Date().getTime())
     })
   }
   const onReset = () => {

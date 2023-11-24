@@ -11,12 +11,13 @@ import type { TopicRequest } from '../../types/ApiRequest'
 
 export default function Home() {
   const [topics, setTopics] = useState<TopicRequest[]>([])
+  const [isRefresh, setIsRefresh] = useState<number>(new Date().getTime())
 
   return (
     <div>
       <header className='w-full h-14'>
         <div className='fixed top-4 right-8 flex justify-stretch items-center'>
-          <PublishButton />
+          <PublishButton setIsRefresh={setIsRefresh}  />
           <Spacer x={4} />
           <ThemeSwitcher />
           <Spacer x={4} />
@@ -24,8 +25,8 @@ export default function Home() {
         </div>
       </header>
       <div className='flex items-center justify-center m-4'>
-        <main className='flex flex-col items-center justify-center w-full border-x-2 sm:w-full md:w-9/12 lg:w-6/12'>
-          <TopicContent topics={topics} setTopics={setTopics} />
+        <main className='flex flex-col items-center justify-center w-full border-x-2 sm:w-full md:w-10/12 lg:w-10/12'>
+          <TopicContent key={isRefresh} topics={topics} setTopics={setTopics} />
         </main>
       </div>
     </div>
