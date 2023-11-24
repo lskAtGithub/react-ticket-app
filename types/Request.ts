@@ -11,3 +11,9 @@ export interface IRequestSuccessParam {
   message?: string
   data?: any
 }
+
+export interface ICommonResult {
+  status: string
+  message: string
+  data: any
+}
