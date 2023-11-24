@@ -6,6 +6,19 @@ import type { TopicRequest } from '../../../../types/ApiRequest'
 
 const prisma = new PrismaClient()
 
+export async function GET() {
+  try {
+    const data = await prisma.topic.findMany({
+      include: {
+        options: true,
+      },
+    })
+    return resSuccess({ data })
+  } catch (error) {
+    return resError({ data: error, status: '500' })
+  }
+}
+
 export async function POST(param: NextRequest) {
   try {
     const data = (await param.json()) as TopicRequest
@@ -28,6 +41,6 @@ export async function POST(param: NextRequest) {
     })
     return resSuccess({ data: topic })
   } catch (error) {
-    resError({ data: error, status: '500' })
+    return resError({ data: error, status: '500' })
   }
 }
