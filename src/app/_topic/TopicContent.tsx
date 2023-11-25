@@ -51,6 +51,7 @@ function TopicCardBody(props: TopicCardProps) {
           return (
             <Image
               isZoomed
+              alt={`第${index}张图片`}
               className='object-cover rounded-xl'
               key={index}
               src={image}
@@ -85,7 +86,7 @@ function TopicContent(props: PropsType) {
       })
     }
     getData()
-  }, [])
+  }, [setTopics])
 
   return (
     <div className='w-10/12 mx-4'>

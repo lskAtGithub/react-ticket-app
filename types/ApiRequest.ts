@@ -19,3 +19,13 @@ export interface TopicRequest {
   images: string[]
   options: Option[]
 }
+
+export interface TopicParam {
+  id: number
+  userId: string
+  avatar: string
+  content: string
+  createTime: string
+  images: string[]
+  options: string[]
+}

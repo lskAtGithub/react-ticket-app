@@ -2,7 +2,7 @@ import { resError, resSuccess } from '@/app/utils/requestResponse'
 import { PrismaClient } from '@prisma/client'
 
 import type { NextRequest } from 'next/server'
-import type { TopicRequest } from '../../../../types/ApiRequest'
+import type { TopicParam } from '../../../../types/ApiRequest'
 
 const prisma = new PrismaClient()
 
@@ -20,7 +20,7 @@ export async function GET() {
 }
 
 export async function POST(param: NextRequest) {
-  const paramCheck = (data: TopicRequest)=> {
+  const paramCheck = (data: TopicParam)=> {
     if(!data.content) {
       return resError({ data: null, status: '400', message: 'content is required' })
     }
@@ -29,7 +29,7 @@ export async function POST(param: NextRequest) {
     }
   }
   try {
-    const data = (await param.json()) as TopicRequest
+    const data = (await param.json()) as TopicParam
     const topic = await prisma.topic.create({
       data: {
         userId: data.userId,
