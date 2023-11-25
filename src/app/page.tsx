@@ -4,6 +4,7 @@ import { UserButton } from '@clerk/nextjs'
 import { Spacer } from '@nextui-org/react'
 import { ThemeSwitcher } from './components/ThemeSwitcher'
 import PublishButton from '@/app/_topic/PublishButton'
+import GoTop from '@/app/components/GoTop'
 import TopicContent from '@/app/_topic/TopicContent'
 import { useState } from 'react'
 
@@ -16,7 +17,7 @@ export default function Home() {
   return (
     <div>
       <header className='w-full h-14'>
-        <div className='fixed top-4 right-8 flex justify-stretch items-center'>
+        <div className='flex justify-end items-center'>
           <PublishButton setIsRefresh={setIsRefresh}  />
           <Spacer x={4} />
           <ThemeSwitcher />
@@ -29,6 +30,7 @@ export default function Home() {
           <TopicContent key={isRefresh} topics={topics} setTopics={setTopics} />
         </main>
       </div>
+      <GoTop />
     </div>
   )
 }
