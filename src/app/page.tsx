@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <div>
-      <header className='w-full h-14'>
+      <header className='w-full py-4'>
         <div className='flex justify-end items-center'>
           <PublishButton setIsRefresh={setIsRefresh}  />
           <Spacer x={4} />
