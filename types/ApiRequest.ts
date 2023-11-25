@@ -1,8 +1,13 @@
-import type { Prisma } from '@prisma/client'
-
 export interface UserRequest {
   id: number
   userId: string
+}
+
+interface Option {
+  id: string
+  topicId: string
+  key: string
+  value: string
 }
 
 export interface TopicRequest {
@@ -12,5 +17,5 @@ export interface TopicRequest {
   content: string
   createTime: string
   images: string[]
-  options: string[]
+  options: Option[]
 }

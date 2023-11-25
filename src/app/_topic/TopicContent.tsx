@@ -9,6 +9,8 @@ import {
   Image,
   Divider,
   Avatar,
+  RadioGroup,
+  Radio,
 } from '@nextui-org/react'
 
 import type { TopicRequest } from '../../../types/ApiRequest'
@@ -43,18 +45,29 @@ function TopicCardBody(props: TopicCardProps) {
   const { item } = props
 
   return (
-    <CardBody className='py-2 w-full flex items-center justify-start flex-row gap-4 flex-wrap'>
-      {item.images.map((item, index) => {
-        return (
-          <Image
-            isZoomed
-            className='object-cover rounded-xl'
-            key={index}
-            src={item}
-            width={270}
-          />
-        )
-      })}
+    <CardBody className='w-full'>
+      <div className='flex items-center justify-start flex-row gap-4 flex-wrap pb-3'>
+        {item.images.map((image, index) => {
+          return (
+            <Image
+              isZoomed
+              className='object-cover rounded-xl'
+              key={index}
+              src={image}
+              width={270}
+            />
+          )
+        })}
+      </div>
+      <RadioGroup label='Please select'>
+        {item.options.map((option, index) => {
+          return (
+            <Radio value='buenos-aires' key={index}>
+              {option.key}
+            </Radio>
+          )
+        })}
+      </RadioGroup>
     </CardBody>
   )
 }
@@ -84,11 +97,7 @@ function TopicContent(props: PropsType) {
                 <TopicCardHeader item={item} />
                 <TopicCardBody item={item} />
               </Card>
-              {topics.length - 1 !== index ? (
-                <Divider className='mt-2 mb-2' />
-              ) : (
-                ''
-              )}
+              {topics.length - 1 !== index ? <Divider className='my-6' /> : ''}
             </>
           )
         })}

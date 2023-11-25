@@ -12,21 +12,19 @@ import {
   Spacer,
   Input,
   Chip,
-  Listbox,
-  ListboxItem,
 } from '@nextui-org/react'
 import { FileUp, Send, X } from 'lucide-react'
 import { CldUploadButton } from 'next-cloudinary'
 import { useState } from 'react'
 import { request } from '@/app/utils/request'
+import { useAuth, useUser } from '@clerk/nextjs'
+import Message from '@/app/components/Message/index'
 
 import type { CldUploadWidgetResults } from 'next-cloudinary'
-import { useAuth, useUser } from '@clerk/nextjs'
 
 interface PublishButtonProps {
   setIsRefresh: Function
 }
-
 
 function PublishButton(props: PublishButtonProps) {
   const { setIsRefresh } = props
@@ -37,6 +35,10 @@ function PublishButton(props: PublishButtonProps) {
   const [images, setImages] = useState<string[]>([])
   const { userId } = useAuth()
   const avatar = useUser().user?.imageUrl
+
+  const showMsg = () => {
+    Message.info('hahaha')
+  }
 
   const onSubmit = (onClose: Function) => {
     request('/topic', {
@@ -100,9 +102,7 @@ function PublishButton(props: PublishButtonProps) {
 
         {images.map((item, index) => {
           return (
-            <div
-              className='flex justify-between items-center px-4'
-              key={index}>
+            <div className='flex justify-between items-center px-4' key={index}>
               <span className='overflow-ellipsis overflow-hidden whitespace-nowrap'>
                 {item}
               </span>
@@ -120,6 +120,9 @@ function PublishButton(props: PublishButtonProps) {
 
   return (
     <>
+    <Button className='mr-4' endContent={<Send />} onPress={showMsg}>
+        消息
+      </Button>
       <Button color='success' endContent={<Send />} onPress={onOpen}>
         发布
       </Button>
