@@ -29,3 +29,9 @@ export interface TopicParam {
   images: string[]
   options: string[]
 }
+
+export interface RecordParam {
+  topicId: number 
+  userId: string
+  choice: string
+}

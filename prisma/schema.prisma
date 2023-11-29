@@ -12,8 +12,8 @@ datasource db {
 }
 
 model User {
-  id     Int     @id @default(autoincrement())
-  userId String  @unique
+  id     Int      @id @default(autoincrement())
+  userId String   @unique
   topic  Topic[]
 }
 
@@ -34,4 +34,11 @@ model Option {
   topic  Topic  @relation(fields: [topcId], references: [id])
   key    String
   value  Int
+}
+
+model Record {
+  id      Int    @id @default(autoincrement())
+  topicId Int
+  userId  String
+  choice  String
 }

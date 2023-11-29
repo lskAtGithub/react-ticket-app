@@ -14,12 +14,18 @@ import {
   Radio,
 } from '@nextui-org/react'
 import { cn } from '@nextui-org/react'
+import { useAuth } from '@clerk/nextjs'
 
-import type { TopicRequest } from '../../../types/ApiRequest'
+import type { TopicRequest, RecordParam } from '../../../types/ApiRequest'
 
 interface PropsType {
   topics: TopicRequest[]
   setTopics: React.Dispatch<React.SetStateAction<TopicRequest[]>>
+}
+
+interface ChoiceType {
+  topicId: number
+  choice: string
 }
 
 interface TopicCardProps {
@@ -68,10 +74,28 @@ function TopicCardBody(props: TopicCardProps) {
 
 function TopicCardFooter(props: TopicCardProps) {
   const { item } = props
+  const { userId } = useAuth()
+
+  const onChangeChoice = (choice: string) => {
+    const param: RecordParam = {
+      choice,
+      userId: userId as string,
+      topicId: item.id,
+    }
+    request('/record', {
+      method: 'POST',
+      body: JSON.stringify(param),
+    }).then((res) => {
+      console.log(res)
+    })
+  }
 
   return (
     <CardFooter className='px-4 py-2 flex flex-col justify-center'>
-      <RadioGroup label='Please select' orientation='horizontal'>
+      <RadioGroup
+        label='Please select'
+        orientation='horizontal'
+        onValueChange={(value) => onChangeChoice(value)}>
         {item.options.map((option, index) => {
           return (
             <Radio
