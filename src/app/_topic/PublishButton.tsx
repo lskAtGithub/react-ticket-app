@@ -18,7 +18,6 @@ import { CldUploadButton } from 'next-cloudinary'
 import { useState } from 'react'
 import { request } from '@/app/utils/request'
 import { useAuth, useUser } from '@clerk/nextjs'
-import Message from '@/app/components/Message/index'
 
 import type { CldUploadWidgetResults } from 'next-cloudinary'
 
@@ -35,10 +34,6 @@ function PublishButton(props: PublishButtonProps) {
   const [images, setImages] = useState<string[]>([])
   const { userId } = useAuth()
   const avatar = useUser().user?.imageUrl
-
-  const showMsg = () => {
-    Message.info('hahaha')
-  }
 
   const onSubmit = (onClose: Function) => {
     request('/topic', {
@@ -120,9 +115,6 @@ function PublishButton(props: PublishButtonProps) {
 
   return (
     <>
-    <Button className='mr-4' endContent={<Send />} onPress={showMsg}>
-        消息
-      </Button>
       <Button color='success' endContent={<Send />} onPress={onOpen}>
         发布
       </Button>

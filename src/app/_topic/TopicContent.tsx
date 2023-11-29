@@ -6,12 +6,14 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardFooter,
   Image,
   Divider,
   Avatar,
   RadioGroup,
   Radio,
 } from '@nextui-org/react'
+import { cn } from '@nextui-org/react'
 
 import type { TopicRequest } from '../../../types/ApiRequest'
 
@@ -60,16 +62,32 @@ function TopicCardBody(props: TopicCardProps) {
           )
         })}
       </div>
-      <RadioGroup label='Please select'>
+    </CardBody>
+  )
+}
+
+function TopicCardFooter(props: TopicCardProps) {
+  const { item } = props
+
+  return (
+    <CardFooter className='px-4 py-2 flex flex-col justify-center'>
+      <RadioGroup label='Please select' orientation='horizontal'>
         {item.options.map((option, index) => {
           return (
-            <Radio value='buenos-aires' key={index}>
+            <Radio
+              value={option.id}
+              key={index}
+              className={cn(
+                'inline-flex m-0 bg-content1 hover:bg-content2 items-center justify-between',
+                'flex-row-reverse max-w-[300px] cursor-pointer rounded-lg gap-4 p-4 border-2 border-transparent',
+                'data-[selected=true]:border-primary'
+              )}>
               {option.key}
             </Radio>
           )
         })}
       </RadioGroup>
-    </CardBody>
+    </CardFooter>
   )
 }
 
@@ -97,6 +115,7 @@ function TopicContent(props: PropsType) {
               <Card className='px-4 py-6' key={item.id}>
                 <TopicCardHeader item={item} />
                 <TopicCardBody item={item} />
+                <TopicCardFooter item={item} />
               </Card>
               {topics.length - 1 !== index ? <Divider className='my-6' /> : ''}
             </>
